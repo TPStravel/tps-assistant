@@ -1,37 +1,30 @@
-import Privacy from './pages/Privacy';
-import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Results from './pages/Results'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Results from './pages/Results';
+import Hotels from './pages/Hotels';
+import Cars from './pages/Cars';
+import Insurance from './pages/Insurance';
+import TestAmadeus from './pages/TestAmadeus';
+import Flights from './pages/Flights';
+import CheckEnv from './pages/CheckEnv';
+import Navbar from './components/Navbar';
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true'
-  })
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode)
-    localStorage.setItem('darkMode', darkMode)
-  }, [darkMode])
-
   return (
-    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-all duration-300">
-      <div className="p-4 flex justify-end">
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 text-sm"
-        >
-          {darkMode ? '☀️ Modo Claro' : '🌙 Modo Escuro'}
-        </button>
-      </div>
-
-      <BrowserRouter>
-               <Routes>
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/results" element={<Results />} />
+    <Router>
+      <Navbar />
+      <div className="p-4">
+        <Routes>
+          <Route path="/" element={<Results />} />
+          <Route path="/hotels" element={<Hotels />} />
+          <Route path="/cars" element={<Cars />} />
+          <Route path="/insurance" element={<Insurance />} />
+          <Route path="/test-amadeus" element={<TestAmadeus />} />
+          <Route path="/flights" element={<Flights />} />
+          <Route path="/check-env" element={<CheckEnv />} />
+          <Route path="*" element={<h1 className="text-center text-xl">Página não encontrada</h1>} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </Router>
   );
 }
