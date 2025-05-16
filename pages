@@ -1,0 +1,46 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+export default function Home() {
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
+  const [date, setDate] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (!origin || !destination || !date) return;
+    navigate('/results', {
+      state: { origin, destination, date }
+    });
+  };
+
+  return (
+    <div className="p-4 max-w-md mx-auto">
+      <h1 className="text-xl font-bold mb-4">Buscar Voos</h1>
+      <input
+        className="mb-2 p-2 w-full border rounded"
+        placeholder="Origem (ex: GRU)"
+        value={origin}
+        onChange={e => setOrigin(e.target.value)}
+      />
+      <input
+        className="mb-2 p-2 w-full border rounded"
+        placeholder="Destino (ex: JFK)"
+        value={destination}
+        onChange={e => setDestination(e.target.value)}
+      />
+      <input
+        className="mb-2 p-2 w-full border rounded"
+        type="date"
+        value={date}
+        onChange={e => setDate(e.target.value)}
+      />
+      <button
+        className="bg-blue-500 text-white py-2 px-4 rounded"
+        onClick={handleSubmit}
+      >
+        Buscar
+      </button>
+    </div>
+  );
+}
