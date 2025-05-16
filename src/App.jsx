@@ -1,3 +1,4 @@
+import Privacy from './pages/Privacy';
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -25,11 +26,12 @@ export default function App() {
       </div>
 
       <BrowserRouter>
-        <Routes>
+               <Routes>
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="/" element={<Home />} />
           <Route path="/results" element={<Results />} />
         </Routes>
       </BrowserRouter>
     </div>
-  )
+  );
 }
