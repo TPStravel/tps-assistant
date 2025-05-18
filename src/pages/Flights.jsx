@@ -1,5 +1,6 @@
 // src/pages/Flights.jsx
 import React, { useEffect, useState } from 'react';
+import { saveToHistory } from '../utils/history';
 
 export default function Flights() {
   const [voos, setVoos] = useState([]);
@@ -26,7 +27,7 @@ export default function Flights() {
         const tokenData = await tokenResp.json();
         if (!tokenData.access_token) throw new Error('Token inválido');
 
-        // 2. Buscar voos reais (GRU → JFK em 2025-06-15)
+        // 2. Buscar voos reais
         const vooResp = await fetch(
           'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=GRU&destinationLocationCode=JFK&departureDate=2025-06-15&adults=1&max=5',
           {
@@ -39,6 +40,16 @@ export default function Flights() {
         const vooData = await vooResp.json();
         if (vooData?.data) {
           setVoos(vooData.data);
+
+          // Salvar no histórico local
+          saveToHistory({
+            tipo: 'Voo',
+            origem: 'GRU',
+            destino: 'JFK',
+            data: '2025-06-15',
+            resultados: vooData.data,
+            dataHoraBusca: new Date().toISOString()
+          });
         } else {
           throw new Error('Erro ao buscar voos');
         }
@@ -53,10 +64,11 @@ export default function Flights() {
   }, []);
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-900 text-white p-8">
       <h1 className="text-2xl font-bold mb-4">✈️ Voos GRU → JFK (15/06/2025)</h1>
+
       {carregando && <p>🔄 Carregando...</p>}
-      {erro && <p className="text-red-600">❌ {erro}</p>}
+      {erro && <p className="text-red-400">❌ {erro}</p>}
 
       <div className="space-y-4">
         {voos.map((voo, index) => {
@@ -67,7 +79,7 @@ export default function Flights() {
           const cia = itinerario.segments[0].carrierCode;
 
           return (
-            <div key={index} className="border rounded-xl p-4 shadow hover:shadow-lg">
+            <div key={index} className="border border-gray-700 rounded-xl p-4 shadow hover:shadow-lg">
               <p><strong>Companhia:</strong> {cia}</p>
               <p><strong>Partida:</strong> {partida}</p>
               <p><strong>Chegada:</strong> {chegada}</p>
