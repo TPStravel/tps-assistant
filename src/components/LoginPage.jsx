@@ -34,16 +34,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8">
-      <h1 className="text-2xl font-bold mb-4">
+  <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+    <div className="bg-gray-800 p-6 sm:p-8 rounded shadow-md w-full max-w-sm">
+      <h1 className="text-2xl font-bold mb-4 text-center">
         {modo === "login" ? "🔐 Entrar" : "🆕 Criar Conta"}
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-xs">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+          className="w-full p-2 rounded bg-gray-900 border border-gray-600"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -51,7 +52,7 @@ export default function LoginPage() {
         <input
           type="password"
           placeholder="Senha"
-          className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+          className="w-full p-2 rounded bg-gray-900 border border-gray-600"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
           required
@@ -67,12 +68,13 @@ export default function LoginPage() {
 
       <button
         onClick={() => setModo(modo === "login" ? "registro" : "login")}
-        className="mt-4 text-sm text-blue-400 hover:underline"
+        className="mt-4 text-sm text-blue-400 hover:underline w-full text-center"
       >
         {modo === "login"
           ? "Não tem conta? Registre-se"
           : "Já tem conta? Faça login"}
       </button>
     </div>
-  );
+  </div>
+);
 }
